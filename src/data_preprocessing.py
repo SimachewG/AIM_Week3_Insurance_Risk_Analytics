@@ -72,13 +72,13 @@ def preprocess_data(data):
         data.drop_duplicates(inplace=True)
 
     # 7. Encode categorical variables (Label Encoding for simplicity)
-    categorical_cols = data.select_dtypes(include='object').columns.tolist()
-    for col in categorical_cols:
-        le = LabelEncoder()
-        try:
-            data[col] = le.fit_transform(data[col])
-        except Exception as e:
-            print(f"Error encoding column '{col}': {e}")
+    #categorical_cols = data.select_dtypes(include='object').columns.tolist()
+    #for col in categorical_cols:
+    #    le = LabelEncoder()
+    #    try:
+    #        data[col] = le.fit_transform(data[col])
+    #    except Exception as e:
+    #        print(f"Error encoding column '{col}': {e}")
 
     # 8. Placeholder for outlier handling (you can implement based on domain)
     # Example: using IQR or Z-score method to remove/cap outliers
