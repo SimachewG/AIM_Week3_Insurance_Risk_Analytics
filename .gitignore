@@ -1,4 +1,5 @@
-#ignore the data from commit
+
 data*/
 __pycache__*/
 /notebook/visualization/
+
