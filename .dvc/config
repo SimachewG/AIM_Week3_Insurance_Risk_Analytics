@@ -1,0 +1,4 @@
+[core]
+    remote = localstorage
+['remote "localstorage"']
+    url = D:/KAIM/Week0_12/Week_3/AIM_Week3_Insurance_Risk_Analytics/dvc_storage
