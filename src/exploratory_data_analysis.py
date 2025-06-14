@@ -27,7 +27,8 @@ def plot_loss_ratio_by(data, column):
     print(f"Saved plot: {filename}")
 
 def univariate_analysis(data):
-    numeric_cols = ['TotalClaims', 'TotalPremium', 'CustomValueEstimate']
+    #numeric_cols = ['TotalClaims', 'TotalPremium', 'CustomValueEstimate']
+    numeric_cols = ['TotalClaims', 'TotalPremium']  # Removed 'CustomValueEstimate'
     for col in numeric_cols:
         plt.figure(figsize=(10, 6))
         sns.histplot(data[col], bins=30, kde=True)
@@ -39,7 +40,8 @@ def univariate_analysis(data):
         print(f"Saved plot: {filename}")
 
 def outlier_detection(data):
-    numeric_cols = ['TotalClaims', 'CustomValueEstimate', 'SumInsured']
+    #numeric_cols = ['TotalClaims', 'CustomValueEstimate', 'SumInsured']
+    numeric_cols = ['TotalClaims', 'SumInsured']
     for col in numeric_cols:
         plt.figure(figsize=(10, 6))
         sns.boxplot(data[col])
