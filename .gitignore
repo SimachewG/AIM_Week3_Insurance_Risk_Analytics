@@ -1,3 +1,6 @@
 #ignore the data from commit
-data*/
+/data/processed/
+/data/raw/
+notebook/visualization/
+/dvc_storage
 __pycache__*/
