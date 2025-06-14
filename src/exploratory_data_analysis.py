@@ -1,11 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from data_preprocessing import load_data, preprocess_data
+#from data_preprocessing import load_data, preprocess_data
+from src.data_preprocessing import load_data, preprocess_data
+
 
 def compute_loss_ratio(data):
-    data['LossRatio'] = data['TotalClaims'] / data['TotalPremium']
-    return data['LossRatio'].mean()
+    premiums = data['TotalPremium'].replace(0, pd.NA)
+    data['LossRatio'] = data['TotalClaims'] / premiums
+    return data['LossRatio'].mean(skipna=True)
 
 def plot_loss_ratio_by(data, column):
     if 'LossRatio' not in data.columns:
@@ -19,7 +22,8 @@ def plot_loss_ratio_by(data, column):
 
 def univariate_analysis(data):
     numeric_cols = ['TotalClaims', 'TotalPremium', 'CustomValueEstimate']
-    for col in numeric_cols:
+    cols_to_plot = [col for col in numeric_cols if col in data.columns]
+    for col in cols_to_plot:
         plt.figure(figsize=(10, 6))
         sns.histplot(data[col], bins=30, kde=True)
         plt.title(f'Distribution of {col}')
@@ -28,12 +32,14 @@ def univariate_analysis(data):
 
 def outlier_detection(data):
     numeric_cols = ['TotalClaims', 'CustomValueEstimate', 'SumInsured']
-    for col in numeric_cols:
+    cols_to_plot = [col for col in numeric_cols if col in data.columns]
+    for col in cols_to_plot:
         plt.figure(figsize=(10, 6))
         sns.boxplot(data[col])
         plt.title(f'Outlier Detection for {col}')
         plt.tight_layout()
         plt.show()
+
 
 def temporal_trend(data):
     monthly = data.groupby('TransactionMonth').agg({
@@ -80,6 +86,7 @@ def correlation_analysis(data):
     plt.tight_layout()
     plt.show()
 
+    
 if __name__ == "__main__":
     data = load_data('../data/raw/MachineLearningRating_v3.txt')
     data = preprocess_data(data)

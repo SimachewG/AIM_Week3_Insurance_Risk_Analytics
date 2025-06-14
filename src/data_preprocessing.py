@@ -46,9 +46,13 @@ def preprocess_data(data):
     # 3. Fill remaining missing values
     for col in data.columns:
         if data[col].dtype == 'object':
-            data[col].fillna(data[col].mode()[0], inplace=True)  # Fill with mode
+            #data[col].fillna(data[col].mode()[0], inplace=True)  # Fill with mode
+            data[col] = data[col].fillna(data[col].mode()[0])
+
         else:
-            data[col].fillna(data[col].median(), inplace=True)   # Fill with median for numeric columns
+            #data[col].fillna(data[col].median(), inplace=True)   # Fill with median for numeric columns
+            data[col] = data[col].fillna(data[col].median())
+
 
     # 4. Convert date columns
     if 'TransactionMonth' in data.columns:
