@@ -2,16 +2,18 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from data_preprocessing import load_data, preprocess_data
+#from data_preprocessing import load_data, preprocess_data
+from src.data_preprocessing import load_data, preprocess_data
+
 
 # Ensure visualization folder exists
 viz_dir = 'visualization'
 os.makedirs(viz_dir, exist_ok=True)
 
 def compute_loss_ratio(data):
-    # Avoid division by zero by adding a check
-    data['LossRatio'] = data['TotalClaims'] / data['TotalPremium'].replace(0, float('nan'))
-    return data['LossRatio'].mean()
+    premiums = data['TotalPremium'].replace(0, pd.NA)
+    data['LossRatio'] = data['TotalClaims'] / premiums
+    return data['LossRatio'].mean(skipna=True)
 
 def plot_loss_ratio_by(data, column):
     if 'LossRatio' not in data.columns:
@@ -27,9 +29,10 @@ def plot_loss_ratio_by(data, column):
     print(f"Saved plot: {filename}")
 
 def univariate_analysis(data):
-    #numeric_cols = ['TotalClaims', 'TotalPremium', 'CustomValueEstimate']
-    numeric_cols = ['TotalClaims', 'TotalPremium']  # Removed 'CustomValueEstimate'
-    for col in numeric_cols:
+    numeric_cols = ['TotalClaims', 'TotalPremium', 'CustomValueEstimate']
+    cols_to_plot = [col for col in numeric_cols if col in data.columns]
+    for col in cols_to_plot:
+
         plt.figure(figsize=(10, 6))
         sns.histplot(data[col], bins=30, kde=True)
         plt.title(f'Distribution of {col}')
@@ -40,9 +43,9 @@ def univariate_analysis(data):
         print(f"Saved plot: {filename}")
 
 def outlier_detection(data):
-    #numeric_cols = ['TotalClaims', 'CustomValueEstimate', 'SumInsured']
-    numeric_cols = ['TotalClaims', 'SumInsured']
-    for col in numeric_cols:
+    numeric_cols = ['TotalClaims', 'CustomValueEstimate', 'SumInsured']
+    cols_to_plot = [col for col in numeric_cols if col in data.columns]
+    for col in cols_to_plot:
         plt.figure(figsize=(10, 6))
         sns.boxplot(data[col])
         plt.title(f'Outlier Detection for {col}')
@@ -51,6 +54,7 @@ def outlier_detection(data):
         plt.savefig(filename)
         plt.close()
         print(f"Saved plot: {filename}")
+
 
 def temporal_trend(data):
     monthly = data.groupby('TransactionMonth').agg({
@@ -105,6 +109,7 @@ def correlation_analysis(data):
     plt.close()
     print(f"Saved plot: {filename}")
 
+    
 if __name__ == "__main__":
     data = load_data('../data/raw/MachineLearningRating_v3.txt')
     data = preprocess_data(data)

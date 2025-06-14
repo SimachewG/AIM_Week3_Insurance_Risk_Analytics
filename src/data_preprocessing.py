@@ -34,6 +34,7 @@ def preprocess_data(data):
     # Fill remaining missing values
     for col in data.columns:
         if data[col].dtype == 'object':
+
             data[col] = data[col].fillna(data[col].mode()[0])
         else:
             data[col] = data[col].fillna(data[col].median())
