@@ -79,6 +79,3 @@ project/
 * Identifies **vehicle make/models** with the highest and lowest claim amounts
 * Visualizes **correlations** between numeric variables
 
-## 👨‍💻 Author
-
-Developed by Simachew Gashaw Yaecob: who works on risk analytics and predictive modeling.
