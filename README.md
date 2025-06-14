@@ -1,81 +1,78 @@
-# 🧼 Insurance Dataset Preprocessing Script
+1: Project Overview – Insurance Risk Analytics**
 
-This module provides functions to **load** and **preprocess** raw insurance claim data from a pipe-delimited text file. It is designed to clean and prepare the dataset for further analysis, such as loss ratio evaluation, modeling, or visualization.
+* Goal: Analyze South African car insurance data
+* Dataset: 1,000,098 records, 52 columns
+* Focus: Risk profiling, customer segmentation, claim trends
+* Tools: Python, Pandas, Seaborn, Matplotlib, Git, GitHub
 
-## 📁 Project Structure
+2: Data Preprocessing – Overview**
 
-```
-project/
-├── data/
-│   └── raw/
-│       └── MachineLearningRating_v3.txt      # Raw insurance dataset
-│
-├── src/
-│   └── data_preprocessing.py                 # This script (loading + preprocessing functions)
-│
-└── README.md
+* Ensures data quality for modeling
+* Key tasks: Handle missing data, encode categories, format columns
+* Implemented in: `src/data_preprocessing.py`
 
-## 📌 Overview
+3: Handling Missing Values**
 
-The script contains two main functions:
+* Checked missing counts and percentages
+* Applied forward-fill method where applicable
+* Categorical placeholders (e.g., "Unknown") used for sparse features
+* Ensured domain-reasonable imputations
 
-### 1. `load_data(filepath)`
+4: Final Cleaned Dataset**
 
-Loads the insurance dataset from a `|` (pipe) delimited `.txt` file.
+* Cleaned data saved for consistent usage
+* Used in notebooks and Python scripts
+* No critical missing values or malformed data remaining
 
-* Checks for missing or incorrect files.
-* Handles parse errors gracefully.
-* Returns a Pandas DataFrame if successful.
+5: Exploratory Data Analysis (EDA) – Overview**
 
-### 2. `preprocess_data(data)`
+* Objective: Discover patterns and guide feature selection
+* Implemented in: `src/eda.py`
+* Visuals saved in: `src/visualization/`
 
-Performs comprehensive data cleaning and preparation.
+6: Distribution Analysis**
 
-Steps include:
+* Focused on key numerical features:
 
-* Missing values summary and treatment:
+  * `TotalClaimAmount`, `TotalPremium`, `SumInsured`
+* Used histograms and boxplots
+* Detected heavy skewness and outliers
 
-  * Drops columns with >60% missing values
-  * Fills missing values with **mode** (categorical) or **median** (numerical)
-* Date parsing and feature extraction from `TransactionMonth`
-* Duplicate row removal
+7: Loss Ratio Exploration**
 
-## 📌 Notes
+* Defined Loss Ratio = Total Claims / Total Premiums
+* Grouped and compared across:
 
-* The column `TransactionMonth` is converted to datetime and used to extract:
+  * Gender
+  * Province
+  * Vehicle Type
+* Identified segments with high loss ratio
 
-  * `TransactionYear`
-  * `TransactionQuarter`
-  * `TransactionMonthNum`
-* Encoding is **optional** and can be customized based on downstream ML models.
-* Placeholder blocks for:
+8: Temporal Trends**
 
-  * Outlier detection (using IQR)
+* Grouped data by transaction month
+* Analyzed time-based trends in claims and premiums
+* Found seasonal claim spikes and premium fluctuations
 
-## 📁 Project Structure
+9: Correlation Analysis**
 
-project/
-│
-├── data/
-│   └── raw/
-│       └── MachineLearningRating_v3.txt   # Raw insurance dataset
-│
-├── scripts/
-│   └── run_analysis.py                    # Main script (code above)
-│
-├── src/
-│   └── data_preprocessing.py             # Contains `load_data()` and `preprocess_data()` functions
-│
-└── README.md                             # This file
-```
+* Generated a correlation heatmap
+* Focused on numerical features
+* Identified potential multicollinearity
+* Suggested which features to combine or drop later
 
-## 🚀 Features
+10: High-Risk Categories & Segments**
 
-* Calculates **loss ratio** as `TotalClaims / TotalPremium`
-* Plots **loss ratio distribution** across `Province`, `Gender`, and `VehicleType`
-* Performs **univariate distribution analysis** for numeric features
-* Detects **outliers** using boxplots for key numeric columns
-* Analyzes **temporal trends** in claims, premiums, and loss ratios
-* Identifies **vehicle make/models** with the highest and lowest claim amounts
-* Visualizes **correlations** between numeric variables
+* Top `VehicleMakeModel` types by claim amount
+* Top `MainCrestaZone` locations by average loss ratio
+* Bar charts used for ranking and segmentation
 
+
+11: Visual Outputs (Saved Figures)**
+
+* `Distribution_TotalClaims.png`
+* `LossRatio_by_Gender.png`
+* `LossRatio_by_Province.png`
+* `Correlation_Heatmap.png`
+* `Temporal_Trend.png`
+* All plots saved to `visualization/`
