@@ -76,3 +76,71 @@
 * `Correlation_Heatmap.png`
 * `Temporal_Trend.png`
 * All plots saved to `visualization/`
+
+12: Hypothesis Testing & Exploratory Analysis
+
+- **Objective**: Identify key business insights through statistical testing
+- **Key Activities**:
+  - Performed A/B tests and Chi-Square tests using `src/hypothesis_analysis.py`
+  - Analyzed relationships between variables such as claim likelihood and demographics
+  - Example:
+    - Compared premium values between vehicle types
+    - Tested dependency of claim status on marital status
+
+13: Data Preprocessing and Feature Engineering
+
+- **Objective**: Clean and transform data for modeling
+- **Steps Taken**:
+  - Handled missing values, encoded categorical variables
+  - Engineered new features like `PremiumToClaimsRatio`
+  - Split data into training and testing sets
+
+14: Predictive Modeling and Explainability
+
+- **Objective**: Predict:
+  1. **Claim Severity** (Regression)
+  2. **Claim Occurrence** (Classification)
+  3. **Risk-Based Premium** (Formula: `Probability × Severity + Expense Loading`)
+- **Modeling Techniques**:
+  - **Regression**: Linear Regression, Decision Tree, Random Forest, XGBoost
+  - **Classification**: Logistic Regression, Decision Tree, Random Forest, XGBoost
+- **Explainability**:
+  - SHAP summary plots and top features
+- **Modules Used**:
+  - `src/Machine_learning_model.py`
+- **Key Outputs**:
+  - `outputs/risk_based_premium.csv`: Final premiums
+  - `outputs/shap_summary.png`: SHAP explainability
+  - `outputs/model_comparison.csv`: Model performance
+  - Feature importances from XGBoost
+
+## 14: Final Model Results
+
+### Claim Severity (Regression)
+
+| Model            | RMSE      | R²    |
+|------------------|-----------|-------|
+| Linear Regression | 33,346.75 | 0.309 |
+| Decision Tree     | 13,204.97 | 0.892 |
+| Random Forest     | 8,974.59  | 0.950 |
+| XGBoost           | 7,383.77  | 0.966 |
+
+### Premium Prediction (Regression)
+
+| Model            | RMSE     | R²    |
+|------------------|----------|-------|
+| Linear Regression | 261.27  | 0.487 |
+| Decision Tree     | 9.90    | 0.999 |
+| Random Forest     | 7.81    | 1.000 |
+| XGBoost           | 28.88   | 0.994 |
+
+### Claim Classification
+
+| Model            | Accuracy | Precision | Recall | F1-score |
+|------------------|----------|-----------|--------|----------|
+| Logistic Regression | 1.000 | 1.000     | 1.000  | 1.000    |
+| Decision Tree       | 1.000 | 1.000     | 1.000  | 1.000    |
+| Random Forest       | 1.000 | 1.000     | 1.000  | 1.000    |
+| XGBoost             | 1.000 | 1.000     | 0.942  | 0.970    |
+
+
