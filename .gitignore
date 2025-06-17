@@ -2,4 +2,7 @@
 data*/
 __pycache__*/
 /notebook/visualization/
+/outputs
+/dvc_storage
+/reports
 
